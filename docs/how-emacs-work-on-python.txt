@@ -1,0 +1,119 @@
+
+Emacs 中如何写Python代码的环境安装
+
+
+安装Homebrew/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+卸载命令为:/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+brew install emacs --with-cocoa
+
+brew linkapps emacs
+
+pip3 install ipython
+
+配置python环境,elpy准备
+
+必备python包
+# Either of these
+pip3 install rope
+pip3 install jedi
+# flake8 for code checks
+pip3 install flake8
+# and autopep8 for automatic PEP8 formatting
+pip3 install autopep8
+# and yapf for code formatting
+pip3 install yapf
+
+
+neotree -- 一个在emacs中使用文件目录树的插件
+
+cd ~/.emacs.d/
+（在Macbook系统上，可以使用快捷键shift+command+. 看隐藏文件，在按一下这个快捷点切换到看不到隐藏文件模式）
+
+mkdir emacs-plugins
+cd emacs-pllugins
+git clone https://github.com/jaypei/emacs-neotree.git neotree
+vim ~/.emacs.d/init.el,并加入配置
+;; init.el --- Emacs configuration
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;begin python;;;;;;;;;;;;;;;;;;;
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(require 'package)
+(add-to-list 'package-archives
+           '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+
+(setq elpy-rpc-python-command "System/Library/Frameworks/Python.framework/Versions/3.7/bin/python3")
+(setq python-shell-interpreter "System/Library/Frameworks/Python.framework/Versions/3.7/bin/ipython"
+    python-shell-interpreter-args "-i --simple-prompt")
+(package-initialize)
+(when (require 'elpy nil t)
+   (elpy-enable))
+(setq elpy-rpc-backend "jedi")
+;;;;;;;;;;;;;;;;;;;;;;;;;;end python;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;begin neotree;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "/Users/micocube/.emacs.d/emacs-plugins/neotree")
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+;;;;;;;;;;;;;;;;;;;;;;;;;;end neotree;;;;;;;;;;;;;;;;;;;;;;;
+
+;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (## elpy))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+启动Emacs，等待一会，要点时间，需要下载插件，执行M-x package-install RET elpy RET安装elpy，M是alt键，RET是回车
+
+
+neotree 简单教程
+### Shortcut (Only in Neotree Buffer)
+
+*   `n` next line ， `p` previous line。
+*   `SPC` or `RET` or `TAB` Open current item if it is a file. Fold/Unfold current item if it is a directory.
+*   `g` Refresh
+*   `A` Maximize/Minimize the [NeoTree](https://www.emacswiki.org/emacs/NeoTree) Window
+*   `H` Toggle display hidden files
+*   `C-c C-n` Create a file or create a directory if filename ends with a ‘/’
+*   `C-c C-d` Delete a file or a directory.
+*   `C-c C-r` Rename a file or a directory.
+*   `C-c C-c` Change the root directory.
+*   `C-c C-p` Copy a file or a directory.
+
+### Commands（Global）
+
+*   `neotree-dir` show [NeoTree](https://www.emacswiki.org/emacs/NeoTree) window and specify a directory as its root
+*   `neotree-show` or `neotree` show [NeoTree](https://www.emacswiki.org/emacs/NeoTree) window using current directory as its root
+*   `neotree-hide` Hide [NeoTree](https://www.emacswiki.org/emacs/NeoTree) window
+*   `neotree-toggle` toggle/hide [NeoTree](https://www.emacswiki.org/emacs/NeoTree) window
+*   `neotree-find` show [NeoTree]  (https://www.emacswiki.org/emacs/NeoTree) window and use the directory of current buffer as its root
+
+### Command（Only in NeoTree Buffer）
+
+*   `neotree-enter` Open File / Unfold Directory
+*   `neotree-refresh` Refresh
+*   `neotree-stretch-toggle` Maximize / Minimize
+*   `neotree-change-root` Switch Root Directory
+*   `neotree-hidden-file-toggle` Toggle hidden files
+*   `neotree-rename-node` Rename a Node
+*   `neotree-delete-node` Delete a Node
+*   `neotree-create-node` Create a file or a directory (if filename ends with ‘/’)
+
+作者：MicoCube
+链接：https://www.jianshu.com/p/5fd2db79e576
+來源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
