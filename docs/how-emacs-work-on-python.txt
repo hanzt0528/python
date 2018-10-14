@@ -117,3 +117,21 @@ neotree 简单教程
 链接：https://www.jianshu.com/p/5fd2db79e576
 來源：简书
 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+
+
+ipython的使用：
+1.首先写一个python程序：
+t.py
+
+import os
+
+print（200）
+
+
+保存文件（c-x c-s）
+
+然后[python]-[start-interpreter]
+在打开的交互窗口中输入：run t.py
+
+run t.py
+200
