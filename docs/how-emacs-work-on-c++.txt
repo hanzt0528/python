@@ -1,0 +1,34 @@
+emacs如何写c++代码
+
+1Create a c++ file
+C-x C-f Find file: ~/workspace/cpp/hello-emacs.cpp
+
+.cpp input :
+
+////////////
+#include <iostream>
+
+using namespace std; 
+int main()
+{
+   cout<<"Hello,Emacs!\n";
+   return 0;
+ }
+/////////////
+
+编译文件
+输入“M-x”(M也就是Alt)后,可以看到minbuffer中显示“M-x”。
+此时再输入“compile”,可以看到显示“Compile command: make -k”,将其删掉后,在输入常规的命令:
+g++ hello-emacs.cpp -o hello-emacs
+
+或者你还可以使用shell。输入“M-x”,再输入“shell”进去shell缓冲区。然后还是上面的编译命令。
+
+当然,你也可以使用在输入“M-x”后,再输入“eshell”,这时会进去Emacs shell,我会选择这种。
+
+
+当然,你会进入不同的缓冲区,那么该如何回到之前的缓冲区呢?
+C-x C-b
+
+运行文件
+既然已经编译成了可执行文件了,那么就来运行它。同样还是继续进入eshell缓冲区。
+./hello-emacs
